@@ -8,19 +8,38 @@ class Solution {
         // ans to return
         String ans = "";
         // this is technically 0
-        boolean hold = false;
+        int hold = 0;
         // make a or b the same size
         String[] nums = convertSize(a, b);
-
-        //re-assigning the paramters
         
         // iterate through both a and b in reverse order
         for(int i = nums[0].length() - 1; i >= 0; i--) {
-
-            //check for 0, 1, and 2
+            // sum the numbers in int form as well as any hold number there is
+            int sum = Character.getNumericValue(nums[0].charAt(i)) + 
+                        Character.getNumericValue(nums[1].charAt(i)) + 
+                        hold;
+            // take out the hold number
+            hold = 0;
+            // check for 0, 1, 2, and 3
+            if(sum == 0) {
+                ans = "0" + ans;
+            } else if(sum == 1) {
+                ans = "1" + ans;
+            } else if(sum == 2) {
+                ans = "0" + ans;
+                hold = 1;
+            } else if(sum == 3) {
+                ans = "1" + ans;
+                hold = 1;
+            }
             
         }
-        return nums[1];
+
+        if(hold == 1) {
+            return "1" + ans;
+        }
+        
+        return ans;
     }
 
     /*
@@ -32,20 +51,23 @@ class Solution {
     */
     public String[] convertSize(String a, String b) {
         // get the difference of the 2 Strings
-        int difference = Math.abs(Integer.parseInt(a) - Integer.parseInt(b));
+        int difference = Math.abs(a.length() - b.length());
         
         // was going to return without max but I need it in order to determine what variable to return (a or b)
-        String max = a.length() > b.length() ? a : b;
+        String num1 = a.length() >= b.length() ? a : b;
 
         // must only convert the String that has the minimum len
-        String min = a.length() < b.length() ? a : b;
+        String num2 = a.length() < b.length() ? a : b;
 
+        String temp = "";
         //added 0s
         for(int i = 0; i < difference; i++) {
-            min = "0" + min;
+            temp += "0";
         }
 
-        String arr[] = {max, min};
+        String arr[] = {num1, temp + num2};
         return arr;
     }
 }
+
+
